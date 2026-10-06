@@ -172,17 +172,37 @@ alert("Welcome to the club");
 //     Expected: 1, 2, 3 ... 15
 //     Think: what happens if you write < instead of <= ? Try it and see.
 
+var i = 1;
+while (i <= 15) {
+  console.log(i);
+  i += 1;
+}
+
 // A2. Print numbers from 30 down to 1.
 //     Counter starts at the HIGH end and moves DOWN, so the condition and
 //     the update both change compared to A1.
 //     Expected: 30, 29, 28 ... 1
 //     Think: what is the very last value printed, and why does the loop stop?
 
+var i = 30;
+while (i >= 1) {
+  console.log(i);
+  i -= 1;
+}
+
 // A3. Print all odd numbers from 1 to 49.
 //     Do it in TWO ways and compare: (a) counter jumps by 2 each time,
 //     (b) counter moves by 1 and you print only when counter % 2 is not 0.
 //     Expected: 1, 3, 5 ... 49
 //     Think: which way runs fewer rounds? Which is easier to read?
+
+var i = 1;
+while (i <= 49) {
+  if (i % 2 !== 0) {
+    console.log(i);
+  }
+  i += 1;
+}
 
 // A4. Print all multiples of 7 from 7 to 140.
 //     Expected: 7, 14, 21 ... 140
@@ -309,10 +329,24 @@ alert("Welcome to the club");
 //     Pattern: ask once BEFORE the loop, ask again INSIDE the loop.
 //     Think: why must the first prompt happen before the while line?
 
+var password = prompt("Enter password : ");
+while (password !== "admin123") {
+  password = prompt("Enter password : ");
+}
+
+console.log("Access granted");
+
 // B2. Keep asking for a number until the user enters a POSITIVE number.
 //     Print "Positive number accepted: <number>".
 //     Test with: 0, -5, 3. Is 0 positive? Make sure your condition agrees
 //     with your answer.
+
+var n = parseInt(prompt("Enter a number : "));
+
+while (n <= 0) {
+  n = parseInt(prompt("Enter a number : "));
+}
+console.log("FOund a positive number", n);
 
 // B3. Keep asking for a number until it is between 1 and 10 (inclusive).
 //     Print a message like "Out of range, try again" on every wrong try.
