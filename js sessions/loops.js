@@ -110,25 +110,25 @@
 
 // while loop fixed iteration
 
-var txt = "hello world my name is john doe";
+// var txt = "hello world my name is john doe";
 
-var total_spaces = 0;
+// var total_spaces = 0;
 
-var i = 0;
-while (i < txt.length) {
-  if (txt[i] === " ") {
-    total_spaces += 1;
-  }
-  i += 1;
-}
+// var i = 0;
+// while (i < txt.length) {
+//   if (txt[i] === " ") {
+//     total_spaces += 1;
+//   }
+//   i += 1;
+// }
 
-console.log(`'${txt}' has ${total_spaces} spaces`);
+// console.log(`'${txt}' has ${total_spaces} spaces`);
 
-var i = txt.length - 1; // last index
-while (i >= 0) {
-  console.log(txt[i]);
-  i -= 1;
-}
+// var i = txt.length - 1; // last index
+// while (i >= 0) {
+//   console.log(txt[i]);
+//   i -= 1;
+// }
 
 // while loop non-fixed iteration
 
@@ -141,12 +141,12 @@ while (i >= 0) {
 // }
 // alert(`Valid name : ${myname}`);
 
-var age = parseInt(prompt("Enter age : "));
+// var age = parseInt(prompt("Enter age : "));
 
-while (age < 18 || age > 25) {
-  age = parseInt(prompt("Enter age  (18-25) : "));
-}
-alert("Welcome to the club");
+// while (age < 18 || age > 25) {
+//   age = parseInt(prompt("Enter age  (18-25) : "));
+// }
+// alert("Welcome to the club");
 
 // =============================================================
 // PRACTICE SET A - 20 while loop tasks (FIXED iteration)
@@ -172,11 +172,11 @@ alert("Welcome to the club");
 //     Expected: 1, 2, 3 ... 15
 //     Think: what happens if you write < instead of <= ? Try it and see.
 
-var i = 1;
-while (i <= 15) {
-  console.log(i);
-  i += 1;
-}
+// var i = 1;
+// while (i <= 15) {
+//   console.log(i);
+//   i += 1;
+// }
 
 // A2. Print numbers from 30 down to 1.
 //     Counter starts at the HIGH end and moves DOWN, so the condition and
@@ -184,11 +184,11 @@ while (i <= 15) {
 //     Expected: 30, 29, 28 ... 1
 //     Think: what is the very last value printed, and why does the loop stop?
 
-var i = 30;
-while (i >= 1) {
-  console.log(i);
-  i -= 1;
-}
+// var i = 30;
+// while (i >= 1) {
+//   console.log(i);
+//   i -= 1;
+// }
 
 // A3. Print all odd numbers from 1 to 49.
 //     Do it in TWO ways and compare: (a) counter jumps by 2 each time,
@@ -196,13 +196,13 @@ while (i >= 1) {
 //     Expected: 1, 3, 5 ... 49
 //     Think: which way runs fewer rounds? Which is easier to read?
 
-var i = 1;
-while (i <= 49) {
-  if (i % 2 !== 0) {
-    console.log(i);
-  }
-  i += 1;
-}
+// var i = 1;
+// while (i <= 49) {
+//   if (i % 2 !== 0) {
+//     console.log(i);
+//   }
+//   i += 1;
+// }
 
 // A4. Print all multiples of 7 from 7 to 140.
 //     Expected: 7, 14, 21 ... 140
@@ -329,24 +329,24 @@ while (i <= 49) {
 //     Pattern: ask once BEFORE the loop, ask again INSIDE the loop.
 //     Think: why must the first prompt happen before the while line?
 
-var password = prompt("Enter password : ");
-while (password !== "admin123") {
-  password = prompt("Enter password : ");
-}
+// var password = prompt("Enter password : ");
+// while (password !== "admin123") {
+//   password = prompt("Enter password : ");
+// }
 
-console.log("Access granted");
+// console.log("Access granted");
 
 // B2. Keep asking for a number until the user enters a POSITIVE number.
 //     Print "Positive number accepted: <number>".
 //     Test with: 0, -5, 3. Is 0 positive? Make sure your condition agrees
 //     with your answer.
 
-var n = parseInt(prompt("Enter a number : "));
+// var n = parseInt(prompt("Enter a number : "));
 
-while (n <= 0) {
-  n = parseInt(prompt("Enter a number : "));
-}
-console.log("FOund a positive number", n);
+// while (n <= 0) {
+//   n = parseInt(prompt("Enter a number : "));
+// }
+// console.log("FOund a positive number", n);
 
 // B3. Keep asking for a number until it is between 1 and 10 (inclusive).
 //     Print a message like "Out of range, try again" on every wrong try.
@@ -369,6 +369,21 @@ console.log("FOund a positive number", n);
 //     Needs two variables: total and count. Average = total / count.
 //     Edge case: user enters -1 immediately. Dividing by zero gives NaN -
 //     handle it with an if and print "No numbers entered".
+
+// var total = 0;
+// var count = 0;
+
+// var n = parseInt(prompt("Enter number : "));
+// while (n >= 0) {
+//   total += n;
+//   count += 1;
+
+//   n = parseInt(prompt("Enter number : "));
+// }
+
+// console.log("total", total);
+// console.log("count", count);
+// console.log("average", total / count);
 
 // B7. Keep asking numbers until -1. Print the LARGEST number entered.
 //     Think: what should "largest so far" start as? Starting at 0 breaks
@@ -432,6 +447,23 @@ console.log("FOund a positive number", n);
 //      start. Print the amount each year and the total years.
 //      Example: 1000 at 10% -> year 1: 1100, year 2: 1210 ... answer 8 years.
 //      Keep the ORIGINAL amount in its own variable to compare against.
+
+var amount = parseInt(prompt("Enter amount"));
+var interestRate = parseInt(prompt("Enter interest rate"));
+
+var orignal_amount = amount;
+
+var year = 0;
+
+while (amount < orignal_amount * 2) {
+  var interest = amount * (interestRate / 100);
+  amount += interest;
+
+  year += 1;
+  console.log(`Year : ${year}\nAmount : ${amount}`);
+}
+
+console.log("Total Years : ", year);
 
 // B18. Number guessing game. Store a secret number in a variable
 //      (e.g. var secret = 7). Keep asking the user to guess. After each
