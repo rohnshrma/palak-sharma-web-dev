@@ -149,121 +149,277 @@ while (age < 18 || age > 25) {
 alert("Welcome to the club");
 
 // =============================================================
-// PRACTICE - 20 while loop tasks (FIXED iteration)
-// (you know in advance how many times the loop runs)
-// No arrays, objects or functions. Solve on your own.
+// PRACTICE SET A - 20 while loop tasks (FIXED iteration)
+// =============================================================
+// Fixed iteration = you can tell, BEFORE the loop starts, how many times
+// it will run (10 times, n times, once per character of a string ...).
+//
+// Every while loop needs these 4 parts - identify them for EVERY task:
+//   1. INIT       : the counter variable and its starting value
+//   2. CONDITION  : when should the loop keep running
+//   3. BODY       : the work done in each round
+//   4. UPDATE     : how the counter moves (forget this = infinite loop!)
+//
+// Rules: no arrays, no objects, no functions. Use prompt() for input,
+// console.log() for output. Dry-run on paper with a small input first.
+// Write the solution yourself - no copy-paste, no AI.
 // =============================================================
 
-// 1. Print numbers from 1 to 15.
+// ---------- A1. Counting basics ----------
 
-// 2. Print numbers from 30 down to 1.
+// A1. Print numbers 1 to 15, one per line.
+//     Init: counter = 1. Condition: counter <= 15. Update: counter + 1.
+//     Expected: 1, 2, 3 ... 15
+//     Think: what happens if you write < instead of <= ? Try it and see.
 
-// 3. Print all odd numbers from 1 to 49.
+// A2. Print numbers from 30 down to 1.
+//     Counter starts at the HIGH end and moves DOWN, so the condition and
+//     the update both change compared to A1.
+//     Expected: 30, 29, 28 ... 1
+//     Think: what is the very last value printed, and why does the loop stop?
 
-// 4. Print all multiples of 7 from 7 to 140.
+// A3. Print all odd numbers from 1 to 49.
+//     Do it in TWO ways and compare: (a) counter jumps by 2 each time,
+//     (b) counter moves by 1 and you print only when counter % 2 is not 0.
+//     Expected: 1, 3, 5 ... 49
+//     Think: which way runs fewer rounds? Which is easier to read?
 
-// 5. Print numbers from 0 to 100 in steps of 25.
+// A4. Print all multiples of 7 from 7 to 140.
+//     Expected: 7, 14, 21 ... 140
+//     Think: how many numbers will be printed? Work it out BEFORE running
+//     (140 / 7), then count the output to confirm.
 
-// 6. Ask a number n with prompt(). Print numbers from 1 to n.
+// A5. Print 0, 25, 50, 75, 100 using a loop (not 5 console.logs).
+//     Choose the step size yourself and decide which comparison
+//     (< or <=) makes 100 appear.
+//     Think: change 100 to 110 - does your loop still behave sensibly?
 
-// 7. Ask a number n with prompt(). Print its table up to 10 in the format
-//    "n x 1 = n".
+// ---------- A2. Input driven counting ----------
 
-// 8. Ask a number n with prompt(). Print the sum of numbers from 1 to n.
+// A6. Ask the user for a number n. Print 1 to n.
+//     Steps: prompt -> convert to number (prompt gives a STRING) -> loop.
+//     Example: n = 5 -> 1 2 3 4 5
+//     Edge cases to test: n = 1, n = 0, n = -3. What should happen?
+//     (a loop that never runs is perfectly valid - just verify it.)
 
-// 9. Ask a number n with prompt(). Print the sum of only the even numbers
-//    from 1 to n.
+// A7. Ask the user for a number n and print its table in the format:
+//         n x 1 = n
+//         n x 2 = 2n  ... up to n x 10
+//     Example: n = 4 -> "4 x 1 = 4", "4 x 2 = 8" ... "4 x 10 = 40"
+//     Use a template literal for the output line.
+//     Think: the multiplier (1-10) is the loop counter, n never changes.
 
-// 10. Ask a number n with prompt(). Print its factorial.
+// A8. Ask the user for n. Print the sum of 1 + 2 + ... + n.
+//     You need an ACCUMULATOR variable (starts at 0) outside the loop.
+//     Each round: add the counter to it. Print ONLY after the loop ends.
+//     Example: n = 5 -> 15      n = 100 -> 5050
+//     Think: why does the accumulator start at 0 and not 1?
 
-// 11. Ask two numbers a and b with prompt(). Print every number from a to b.
+// A9. Ask the user for n. Print the sum of only the EVEN numbers from 1 to n.
+//     Example: n = 10 -> 2 + 4 + 6 + 8 + 10 = 30
+//     Decide: do you check each number with %, or jump the counter by 2?
+//     Edge case: n = 1 should print 0.
 
-// 12. Ask two numbers a and b (a < b) with prompt(). Print how many numbers
-//     between a and b (inclusive) are divisible by 4.
+// A10. Ask the user for n. Print its factorial (n x (n-1) x ... x 1).
+//      Like A8 but the accumulator MULTIPLIES, so it must start at 1.
+//      Example: n = 5 -> 120      n = 0 -> 1 (by definition)
+//      Think: what is the biggest n before JavaScript prints a huge
+//      number like 2.43e+18 or Infinity? Find it by experiment.
 
-// 13. Print the squares of numbers from 1 to 10 (1, 4, 9 ...).
+// A11. Ask the user for two numbers a and b. Print every number from a to b.
+//      Example: a = 3, b = 8 -> 3 4 5 6 7 8
+//      Think: what if the user gives a > b? Decide your behaviour
+//      (print nothing / print downwards) and implement it with an if.
 
-// 14. Ask a number n with prompt(). Print the first n multiples of 3.
+// A12. Ask for a and b (a < b). Count how many numbers from a to b
+//      (both included) are divisible by 4 and print only the COUNT.
+//      Example: a = 1, b = 20 -> 5 (4, 8, 12, 16, 20)
+//      Pattern: counter variable + if inside the loop (a "counting" loop).
 
-// 15. Ask a word with prompt(). Print each character with its index,
-//     like "0 -> h".
+// A13. Print the squares of numbers 1 to 10 in the format "3 squared = 9".
+//      Expected: 1 squared = 1 ... 10 squared = 100
+//      Think: where is the multiplication done - in the update or the body?
 
-// 16. Ask a word with prompt(). Print its characters in reverse order.
+// A14. Ask the user for n. Print the FIRST n multiples of 3.
+//      Example: n = 4 -> 3 6 9 12
+//      Careful: here the loop runs exactly n times, but the values printed
+//      go up to 3n. Keep "how many times" and "which value" as two
+//      separate ideas (hint: counter and counter * 3).
 
-// 17. Ask a sentence with prompt(). Count and print how many vowels it has.
+// ---------- A3. Strings, one character per round ----------
+// Reminder: txt.length is the number of characters, txt[0] is the first
+// one, txt[txt.length - 1] is the last one.
 
-// 18. Ask a word with prompt(). Build a new string where every character is
-//     repeated twice ("abc" -> "aabbcc") and print it.
+// A15. Ask for a word. Print every character with its index:
+//          0 -> h
+//          1 -> e ...
+//      The counter doubles as the INDEX here. Check your last printed index
+//      equals word.length - 1.
 
-// 19. Ask a word and a character with prompt(). Count how many times that
-//     character appears in the word.
+// A16. Ask for a word. Print its characters in REVERSE, one per line.
+//      Counter starts at the last index and goes down to 0.
+//      Think: why does the condition need >= 0 and not > 0?
 
-// 20. Ask a word with prompt(). Check whether it is a palindrome using two
-//     indexes (one from start, one from end) and print the result.
+// A17. Ask for a sentence. Count and print how many vowels it has
+//      (a, e, i, o, u - upper and lower case).
+//      Hint on approach: convert to one case first, then check each char.
+//      Example: "Hello World" -> 3
+
+// A18. Ask for a word. Build a NEW string in which every character is
+//      repeated twice, then print it.
+//      Example: "abc" -> "aabbcc"
+//      Start with an empty string "" and keep joining to it each round.
+
+// A19. Ask for a word AND a single character. Count how many times the
+//      character appears in the word and print the count.
+//      Example: "banana", "a" -> 3
+//      Edge case: character not present -> 0. Upper vs lower case - decide
+//      whether "A" should match "a" and handle it.
+
+// A20. Ask for a word. Decide whether it is a palindrome using TWO indexes:
+//      left starts at 0, right starts at the last index. Compare the two
+//      characters, then move left forward and right backward.
+//      Example: "madam" -> palindrome, "hello" -> not a palindrome
+//      Think: when can the loop stop? (left and right meet or cross.)
+//      Think: once one mismatch is found, do you need to keep looping?
 
 // =============================================================
-// PRACTICE - 20 while loop tasks (NON-FIXED iteration)
-// (you do NOT know in advance how many times the loop runs -
-//  it depends on the user or on a condition)
-// No arrays, objects or functions. Solve on your own.
+// PRACTICE SET B - 20 while loop tasks (NON-FIXED iteration)
+// =============================================================
+// Non-fixed iteration = you do NOT know how many times the loop runs.
+// It depends on user input or on a value changing until a goal is met.
+//
+// Typical shapes - recognise which one each task is:
+//   (i)   VALIDATION  : ask again while the answer is wrong
+//   (ii)  SENTINEL    : keep reading values until a special "stop" value
+//   (iii) SEARCH      : keep going until something is found
+//   (iv)  CONVERGENCE : keep changing a number until it reaches a target
+//
+// Golden rule: the condition must be able to become false by something
+// that happens INSIDE the loop (new input, changed variable).
+// If your page hangs, you have an infinite loop - close the tab and
+// re-check the UPDATE step.
+// Rules: no arrays, objects or functions. No solutions given.
 // =============================================================
 
-// 1. Keep asking a password with prompt() until the user enters exactly
-//    "admin123". Then print "Access granted".
+// ---------- B1. Validation ----------
 
-// 2. Keep asking for a number until the user enters a positive number.
+// B1. Keep asking for a password until the user types exactly "admin123".
+//     Then print "Access granted".
+//     Pattern: ask once BEFORE the loop, ask again INSIDE the loop.
+//     Think: why must the first prompt happen before the while line?
 
-// 3. Keep asking for a number until the user enters a number between
-//    1 and 10 (inclusive).
+// B2. Keep asking for a number until the user enters a POSITIVE number.
+//     Print "Positive number accepted: <number>".
+//     Test with: 0, -5, 3. Is 0 positive? Make sure your condition agrees
+//     with your answer.
 
-// 4. Keep asking numbers and adding them to a total. Stop when the user
-//    enters 0. Print the total.
+// B3. Keep asking for a number until it is between 1 and 10 (inclusive).
+//     Print a message like "Out of range, try again" on every wrong try.
+//     Think: should the condition use && or || to describe "invalid"?
 
-// 5. Keep asking numbers until the user enters -1. Print how many numbers
-//    were entered (not counting -1).
+// ---------- B2. Sentinel loops ----------
 
-// 6. Keep asking numbers until the user enters -1. Print the average of the
-//    numbers entered.
+// B4. Keep asking numbers and add them to a running total. Stop when the
+//     user enters 0. Print the total.
+//     Example inputs: 5, 10, 2, 0 -> total 17
+//     Think: the 0 must NOT be treated as a normal number - or does it
+//     matter here? Reason about why (adding 0 changes nothing).
 
-// 7. Keep asking numbers until the user enters -1. Print the largest number
-//    entered.
+// B5. Keep asking numbers until the user enters -1. Print HOW MANY
+//     numbers were entered (not counting -1).
+//     Example: 4, 8, 15, -1 -> 3
+//     Careful: -1 must not be counted. Where do you increase the counter?
 
-// 8. Keep asking numbers until the user enters -1. Print the smallest number
-//    entered.
+// B6. Keep asking numbers until -1. Print the AVERAGE of the numbers.
+//     Needs two variables: total and count. Average = total / count.
+//     Edge case: user enters -1 immediately. Dividing by zero gives NaN -
+//     handle it with an if and print "No numbers entered".
 
-// 9. Keep asking a number. Stop as soon as the user enters an even number.
-//    Print how many odd numbers were entered before it.
+// B7. Keep asking numbers until -1. Print the LARGEST number entered.
+//     Think: what should "largest so far" start as? Starting at 0 breaks
+//     when every input is negative (e.g. -5, -2, then -1 to stop).
+//     Pick the starting value carefully (hint: the first real number).
 
-// 10. Ask a number n with prompt(). Keep dividing it by 2 until it becomes
-//     less than 1. Print how many divisions it took.
+// B8. Keep asking numbers until -1. Print the SMALLEST number entered.
+//     Same idea as B7, opposite direction. Do both B7 and B8 in a single
+//     program so you track max and min together.
 
-// 11. Ask a number n with prompt(). Count and print how many digits it has
-//     (use / and % style logic, not the string length).
+// B9. Keep asking numbers. Stop the moment the user enters an EVEN number.
+//     Print how many ODD numbers were entered before it.
+//     Example: 3, 7, 9, 4 -> 3
+//     The stopping value is decided by a calculation (n % 2), not a fixed
+//     number like 0 or -1.
 
-// 12. Ask a number n with prompt(). Print the sum of its digits.
+// B10. Keep asking the user for words. Stop when the user types "stop"
+//      in ANY case (STOP, Stop, sToP). Print how many words were typed
+//      before it.
+//      Hint: normalise the case before comparing (toLowerCase).
 
-// 13. Ask a number n with prompt(). Print its digits reversed (1234 -> 4321).
+// ---------- B3. Digit and number manipulation ----------
+// Two tools for this section:
+//   n % 10        -> gives the LAST digit of n   (1234 % 10 = 4)
+//   Math.floor(n / 10) -> removes the last digit (1234 -> 123)
+// Repeat both until n becomes 0 - you do not know the digit count upfront,
+// which is exactly why this is a non-fixed loop.
 
-// 14. Ask a number n with prompt(). Check whether it is a palindrome number
-//     (121, 1331 ...) and print the result.
+// B11. Ask for a number n. Count its digits WITHOUT using string length.
+//      Example: 90210 -> 5
+//      Edge case: what should 0 give? (a loop that runs while n > 0 would
+//      give 0 digits - decide if you need to special-case it.)
 
-// 15. Start with 1 and keep doubling it. Stop when the value crosses 10000.
-//     Print every value and how many steps it took.
+// B12. Ask for n. Print the sum of its digits.
+//      Example: 4821 -> 4 + 8 + 2 + 1 = 15
+//      Trace on paper: write n, last digit, sum for every round.
 
-// 16. Ask a starting amount and an interest rate with prompt(). Keep adding
-//     the interest every year until the amount becomes double. Print how
-//     many years it took.
+// B13. Ask for n. Print its digits REVERSED as a number.
+//      Example: 1234 -> 4321
+//      Build the answer with: reversed = reversed * 10 + lastDigit.
+//      Trace it on paper with 123 before coding to see why it works.
 
-// 17. Keep asking the user to guess a secret number (set it in a variable,
-//     e.g. 7). Print "Too high" or "Too low" each time. Stop on a correct
-//     guess and print the number of attempts.
+// B14. Ask for n. Print whether it is a palindrome number (121, 1331 ...).
+//      Reuse B13: reverse it, then compare with the ORIGINAL.
+//      Think: you change n inside the loop - keep a copy of the original
+//      in another variable before you start.
 
-// 18. Keep asking the user for a word. Stop when the user enters "stop"
-//     (any case). Print how many words were entered.
+// B15. Ask for n. Keep dividing it by 2 until it becomes less than 1.
+//      Print the number of divisions needed. (n = 100 -> 7)
+//      Print n after every division so you can watch it shrink.
 
-// 19. Ask two numbers a and b with prompt(). Find their GCD by repeatedly
-//     subtracting the smaller from the larger until both are equal.
+// ---------- B4. Convergence and games ----------
 
-// 20. Ask a number n with prompt(). Apply this rule until n becomes 1:
-//     if n is even, n = n / 2, else n = 3 * n + 1. Print every value and
-//     the number of steps taken (Collatz sequence).
+// B16. Start with value = 1. Keep doubling it. Stop once it exceeds 10000.
+//      Print each value and, at the end, how many doublings it took.
+//      Expected last line like: "Crossed 10000 after 14 steps"
+//      Think: is it > or >= for "crossed"? Does it change your answer here?
+
+// B17. Ask for a starting amount and a yearly interest rate (in %).
+//      Add the interest every year until the amount is at least DOUBLE the
+//      start. Print the amount each year and the total years.
+//      Example: 1000 at 10% -> year 1: 1100, year 2: 1210 ... answer 8 years.
+//      Keep the ORIGINAL amount in its own variable to compare against.
+
+// B18. Number guessing game. Store a secret number in a variable
+//      (e.g. var secret = 7). Keep asking the user to guess. After each
+//      wrong guess print "Too high" or "Too low". When correct, print
+//      "Correct! You took X attempts".
+//      Needs: an attempts counter that increases on every guess.
+//      Bonus challenge (still while loop): limit the game to 5 attempts.
+//      Then your loop has TWO reasons to stop - how do you express that?
+
+// B19. Ask for two numbers a and b. Find their GCD using repeated
+//      subtraction: while a and b are different, subtract the smaller from
+//      the larger. When they become equal, that value is the GCD.
+//      Example: 48 and 18 -> 12
+//      Print a and b after every round to follow the process.
+//      Edge case: zero or negative input would loop forever - guard it
+//      with a validation loop (like B2) BEFORE this one.
+
+// B20. Collatz sequence. Ask for a positive number n. Repeat until n is 1:
+//        if n is even  -> n = n / 2
+//        otherwise     -> n = 3 * n + 1
+//      Print every value and the total number of steps.
+//      Example: n = 6 -> 6 3 10 5 16 8 4 2 1  (8 steps)
+//      Try n = 27 and see how long it gets.
+//      Think: nobody has proven this always reaches 1 - what does that
+//      say about this loop being truly "non-fixed"?
