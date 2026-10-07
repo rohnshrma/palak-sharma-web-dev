@@ -493,379 +493,184 @@
 // =============================================================
 // DO WHILE LOOP
 // =============================================================
-// A do-while loop looks almost like a while loop, but the BODY runs
-// FIRST and the CONDITION is checked AFTER, at the bottom.
-//
-//   do {
-//     // code - this runs at least once, no matter what
-//   } while (condition);   <- semicolon is required here, easy to forget
-//
-// Because the check happens at the end, a do-while ALWAYS executes its
-// body at least one time, even if the condition is false from the very
-// start. A plain "while" checks BEFORE running, so it can skip the body
-// completely (zero times) if the condition starts out false.
-//
-// This is the ONLY real difference between while and do-while:
-//   while      -> check first, maybe run 0 times
-//   do-while   -> run first, check after, runs at least 1 time
-//
-// When to reach for do-while: anytime the task is naturally
-// "do something, THEN decide whether to repeat" - a menu that must be
-// shown once before the user can choose, a prompt that must ask at
-// least once, a game round that always plays once before "play again?".
-
-// var i = 10;
+// Runs the body FIRST, checks the condition AFTER.
+// So it always runs at least once - even if the condition is false
+// from the start. A normal "while" checks BEFORE running, so it can
+// run zero times. That's the only difference.
 //
 // do {
-//   console.log(i);     // line A: runs the body
-//   i += 1;              // line B: update, runs every round, same as while
-// } while (i < 10);       // line C: condition checked AFTER line A and B
-//
-// Trace this exactly, round by round:
-//   i is 10 before the loop starts.
-//   ROUND 1: body runs (line A prints 10, line B makes i = 11).
-//            THEN condition is checked: is 11 < 10 ? No -> loop stops.
-//   Only "10" is ever printed, even though 10 < 10 is false and a
-//   normal while(i < 10) would have printed NOTHING at all.
-// Think: change the condition to "i < 15" and trace again on paper
-// before running it - how many lines print now, and what are they?
+//   // runs at least once
+// } while (condition);   <- semicolon required here
+
+// var i = 10;
+// do {
+//   console.log(i);   // prints 10
+//   i += 1;            // i becomes 11
+// } while (i < 10);     // 11 < 10 is false -> stops after 1 run
 
 // ---------- break ----------
-// break means: stop the loop RIGHT NOW, don't finish this round, don't
-// run any more rounds. Control jumps straight to the first line AFTER
-// the loop's closing brace }. It works inside for, while, AND do-while.
+// Stops the loop immediately - no more rounds, loop ends right away.
 
 // for (var i = 1; i <= 10; i += 1) {
 //   if (i == 5) {
-//     console.log("Over");   // line A
-//     break;                  // line B: loop ends here, forever
+//     console.log("Over");
+//     break;        // loop ends here
 //   }
-//   console.log(i);           // line C
+//   console.log(i);
 // }
-//
-// Trace:
-//   i=1: line C prints 1 (the if was false, so A/B never ran)
-//   i=2: prints 2
-//   i=3: prints 3
-//   i=4: prints 4
-//   i=5: the if is now true -> line A prints "Over" -> line B (break)
-//        stops the ENTIRE loop immediately.
-// Notice the for loop's own update step (i += 1) never gets a chance
-// to run after break - break exits before the loop machinery continues.
-// i never becomes 6, 7, 8... they are simply never visited.
-// Final output, in order: 1  2  3  4  Over            (nothing after)
+// Output: 1 2 3 4 Over   (5, 6 ... 10 never run)
 
-// ---------- break inside an infinite loop ----------
-// while (true) is a condition that is ALWAYS true, so normally this
-// loop would run forever. The only way to escape it is a break
-// somewhere inside the body. This is a very common pattern: "keep
-// looping until something happens, then break" - useful when the exact
-// stop condition is easier to check AFTER getting input, rather than
-// writing it directly in the while(...) line.
-
+// while (true) means "loop forever" - only a break inside can end it:
 // var pass = "admin123";
-//
 // while (true) {
 //   var guess = prompt("Enter password : ");
-//
 //   if (guess === pass) {
 //     console.log("Logged In");
-//     break;                       // the ONLY exit from this loop
+//     break;             // only way out
 //   }
 //   console.log("Invalid Password");
 // }
-// Think: what would happen if the break were accidentally deleted?
-// (Answer: the loop would keep asking for a password forever, even
-// after the correct one is typed, because nothing ever stops it.)
-// Compare this to B1 in Set B, which solved the exact same problem
-// using a condition in the while(...) line instead of while(true)+break.
-// Both are correct - this is just a different, equally valid, shape.
 
 // ---------- continue ----------
-// continue means: stop THIS round right here, but do NOT exit the
-// loop - skip straight to the next round instead.
-//   - in a for loop: continue jumps to the UPDATE step (i += 1), then
-//     the condition is checked, then the body runs again if still true.
-//   - in a while / do-while loop: continue jumps straight back up to
-//     the CONDITION line. There is no separate "update step" built into
-//     while/do-while, so if your update (like i += 1) is written AFTER
-//     where continue fires, that update gets skipped too - a classic
-//     cause of accidental infinite loops. Always double check that the
-//     update already happened before a continue in a while loop, or
-//     move the update to the very top of the body.
+// Skips the rest of THIS round, jumps straight to the next one.
+// In while/do-while, continue jumps back to the CONDITION - so update
+// your counter BEFORE continue, or the loop can run forever.
 
-// var secret = Math.floor(Math.random() * 100) + 1;
-//   Math.random()        -> random decimal, 0 up to (not including) 1
-//   Math.random() * 100  -> scales it to 0 up to (not including) 100
-//   Math.floor(...)      -> chops off the decimal part -> whole number 0-99
-//   + 1                  -> shifts the range to 1-100 inclusive
-//
+// var secret = Math.floor(Math.random() * 100) + 1; // random 1-100
 // while (true) {
 //   var guess = parseInt(prompt("Enter your guess (1-100) :"));
-//
 //   if (guess < 0 || guess > 100) {
 //     alert("Invalid Guess!");
-//     continue;              // skip everything below, re-loop immediately
+//     continue;          // skip the checks below, ask again
 //   }
-//
 //   if (guess < secret) {
 //     alert("Too Low! Try high");
 //   } else if (guess > secret) {
 //     alert("Too High! Try low");
 //   } else {
 //     alert(`Congratulations! you've guessed the correct number : ${secret}`);
-//     break;                  // correct guess - exit for good
+//     break;
 //   }
 // }
-// Think: without that continue, an out-of-range guess like 500 would
-// fall straight into "guess < secret" (500 is NOT less than secret, so
-// it would wrongly say "Too High! Try low" for garbage input). continue
-// protects the rest of the logic from ever seeing an invalid guess.
-// Also notice: there is no counter/update in this particular loop, so
-// the "update before continue" warning above does not apply here - but
-// it WILL apply to several of your own tasks below, so watch for it.
 
 // =============================================================
-// PRACTICE SET C - 10 do-while loop tasks
+// PRACTICE SET C - 10 do-while tasks
 // =============================================================
-// Point of every task here: prove to yourself, with real input, that
-// the body runs at least once even when the condition would have been
-// false the whole time. Where it matters, a task will ask you to
-// compare against the while-loop version you'd normally write.
-// Rules: no arrays, objects or functions. No solutions given.
-// =============================================================
+// No arrays, objects or functions. No solutions given.
 
-// C1. Print numbers 1 to 10 using a do-while loop instead of a while
-//     loop (compare with A1). Expected: 1 2 3 ... 10
-//     Think: which 3 lines changed compared to the while version, and
-//     which 2 lines stayed exactly the same?
+// C1. Print 1 to 10 using do-while.
 
-// C2. Ask the user for a number with prompt() and print it. Using
-//     do-while, keep asking and printing UNTIL the number entered is
-//     greater than 0.
-//     Example: entered -5, -2, 0, 7 -> all four get printed, loop then
-//     stops because 7 > 0.
-//     Think: because it's a do-while, the FIRST number is printed no
-//     matter what it is. Would a plain while loop print it too? Why
-//     or why not?
+// C2. Ask for a number with prompt(). Keep asking (do-while) and
+//     printing it until a number greater than 0 is entered.
 
-// C3. Simulate a tiny menu. Using do-while: print "1. Say hi  2. Exit",
-//     then ask the user to type 1 or 2. If they type 1, print "hi" and
-//     loop again (show the menu again). If they type 2, print "Bye"
-//     and stop.
-//     Think: the menu text has to appear at least once before the user
-//     can even choose anything - that is exactly why do-while fits
-//     here better than a condition-first while.
+// C3. Do-while menu: print "1. Say hi  2. Exit". If user types 1,
+//     print "hi" and show the menu again. If 2, print "Bye" and stop.
 
-// C4. Rewrite B1 (password check, from Set B) using do-while instead of
-//     while. Keep asking while the password is NOT "letmein", print
-//     "Welcome" once it matches.
-//     Think: B1's while version needed the FIRST prompt written twice
-//     (once before the loop, once inside it). Does your do-while
-//     version still need that, or does do-while remove the duplication?
+// C4. Rewrite B1 (password check, Set B) using do-while instead of while.
 
-// C5. Ask for a number n with prompt(). Using a do-while loop, print
-//     its multiplication table from n x 1 to n x 10 (same format as A7).
-//     Think: a multiplication table always runs exactly 10 times no
-//     matter what n is - is do-while really the best fit here, or would
-//     a plain for loop be more natural? Write your answer as a comment.
+// C5. Ask for a number n. Print its multiplication table (n x 1 to
+//     n x 10) using do-while.
 
-// C6. Hardcode var secret = 42. Using do-while, ask the user to guess
-//     the number. After every wrong guess print "Try again". Stop and
-//     print "You got it!" once the guess is correct.
+// C6. var secret = 42. Guess it using do-while. Print "Try again" on
+//     a wrong guess, "You got it!" when correct.
 
-// C7. Roll a "dice" with var roll = Math.floor(Math.random() * 6) + 1;
-//     Using do-while, print each roll, and stop once you roll a 6.
-//     Count and print how many rolls it took.
-//     Think: why does this task NEED the body to run at least once
-//     (hint: before the first roll, you have no idea whether it will
-//     be a 6 or not - you can't check a condition you haven't computed
-//     yet).
+// C7. var roll = Math.floor(Math.random() * 6) + 1. Using do-while,
+//     keep rolling and printing until you roll a 6. Print how many
+//     rolls it took.
 
-// C8. Ask the user for a number. Using do-while, repeatedly print it
-//     and then replace it with Math.floor(n / 2), stopping once it
-//     reaches 0. Confirm on paper: if the user enters 0 right away,
-//     how many lines print, and what do they say?
+// C8. Ask for a number. Using do-while, print it, then replace it with
+//     Math.floor(n / 2), stop once it reaches 0.
 
-// C9. Using do-while, ask "Do you want to continue? (yes/no)" and keep
-//     looping while the answer is "yes". Each round also ask for a
-//     number and print its square before asking the continue question.
-//     Example flow: yes -> enter 4 -> prints 16 -> continue? yes ->
-//     enter 5 -> prints 25 -> continue? no -> loop stops.
+// C9. Do-while: ask "Continue? (yes/no)", keep looping while answer is
+//     "yes". Each round also ask a number and print its square.
 
-// C10. Rewrite B17 (compound interest, from Set B) as a do-while loop
-//      instead of while. Keep the same logic (add interest every year
-//      until the amount is at least double the original). Think about
-//      whether the condition could realistically be false on the very
-//      FIRST check with normal inputs (positive amount, positive rate)
-//      - does switching to do-while change the output at all here?
+// C10. Rewrite B17 (compound interest, Set B) using do-while.
 
 // =============================================================
-// PRACTICE SET D - 12 break tasks (for, while, and do-while)
+// PRACTICE SET D - 12 break tasks (for, while, do-while)
 // =============================================================
-// Point of every task: use break to exit a loop the INSTANT something
-// is true, instead of letting it run to its natural end. After each
-// task, check: did the loop actually stop early, or did it just happen
-// to reach the end anyway?
-// Rules: no arrays, objects or functions. No solutions given.
-// =============================================================
+// No arrays, objects or functions. No solutions given.
 
-// D1. Using a for loop from 1 to 100, print each number - but break
-//     completely the moment you reach a number divisible by 13. That
-//     number should be the LAST thing printed.
+// D1. for loop 1 to 100: break the moment you hit a number divisible
+//     by 13. Print that number.
 
-// D2. Using a for loop (i from 1 to 20), ask the user for a number each
-//     round and print "Got it". If the user ever types 0, break
-//     immediately and print "Stopped early at round <i>". If 0 is
-//     never typed in all 20 rounds, print "Completed all rounds" AFTER
-//     the loop ends normally.
-//     Think: how do you tell, after the loop, whether break actually
-//     ran or not? (Hint: a flag variable set only right before break.)
+// D2. for loop, 20 rounds: ask a number each round, print "Got it".
+//     If 0 is entered, break and print "Stopped early at round <i>".
+//     If never, print "Completed all rounds" after the loop.
 
-// D3. Using while (true), keep asking the user for numbers and adding
-//     each one to a running total. The moment the total crosses 100,
-//     break and print the final total plus how many numbers were
-//     entered.
-//     Think: compare this to B4/B5 - there the stop value was a fixed
-//     sentinel like 0 or -1 checked in the while(...) line. Here the
-//     stop condition depends on the TOTAL, which you can only check
-//     mid-round - that is exactly when break is more natural than a
-//     condition in the while line.
+// D3. while (true): keep adding entered numbers to a total. Break the
+//     moment the total crosses 100. Print the total and how many
+//     numbers were entered.
 
-// D4. Using a for loop, search for the FIRST number between 1 and 2000
-//     that is divisible by both 6 and 7. Break the instant you find it
-//     and print that number. Do not use any formula - just loop and
-//     check with %.
+// D4. for loop: find the FIRST number between 1 and 2000 divisible by
+//     both 6 and 7. Break and print it the instant you find it.
 
-// D5. Using a do-while loop, keep asking the user for a word. Break out
-//     as soon as a word longer than 8 characters is entered, then print
-//     that word together with its length.
+// D5. do-while: keep asking for a word. Break as soon as a word longer
+//     than 8 characters is entered, print it with its length.
 
-// D6. Using a for loop from 1 to 60, print every number, but break
-//     completely the SECOND time (not the first) you encounter a
-//     multiple of 9. You will need your own counter variable tracking
-//     "how many multiples of 9 have I seen so far" to know when to
-//     break on the second one specifically.
+// D6. for loop 1 to 60: break on the SECOND multiple of 9 you reach
+//     (not the first) - you need your own counter for this.
 
-// D7. Using while (true), ask the user for numbers one at a time. Break
-//     the moment a NEGATIVE number is entered, and print the sum of
-//     only the positive numbers that were entered before it.
+// D7. while (true): add up entered numbers. Break the moment a
+//     negative number is entered, print the sum of the positives.
 
-// D8. Hardcode var pin = "4455". Using a for loop that allows at most 3
-//     attempts (i from 1 to 3), ask for the PIN each round. If it
-//     matches, print "Card accepted" and break. If all 3 rounds finish
-//     with no match, print "Card blocked" - and think carefully about
-//     WHERE that line needs to be written (inside the loop? right after
-//     it?) so it only prints when break never happened.
+// D8. var pin = "4455". for loop, max 3 attempts: ask for the pin
+//     each round. If correct, print "Card accepted" and break. If all
+//     3 attempts fail, print "Card blocked" after the loop.
 
-// D9. Ask the user for a single number n with prompt(). Using a for
-//     loop with i from 2 up to n - 1, check whether i divides n evenly;
-//     the instant it does, print "Not prime" and break. If the loop
-//     finishes all the way with no divisor ever found, print "Prime"
-//     right after the loop (not inside it).
-//     Think: for a large n, roughly how many rounds does break save you
-//     compared to always checking every single i up to n - 1?
+// D9. Ask for a number n. for loop i from 2 to n-1: if n % i === 0,
+//     print "Not prime" and break. If the loop finishes with no match,
+//     print "Prime" after the loop.
 
-// D10. Using while (true), keep asking the user for numbers, remembering
-//      the PREVIOUS number in another variable. Break the moment the
-//      SAME number is entered twice in a row, and print
-//      "Repeated number detected: <n>".
-//      Edge case: what should happen on the very first number entered,
-//      when there is no "previous" yet to compare against?
+// D10. while (true): remember the previous number entered. Break the
+//      moment the SAME number is entered twice in a row, print it.
 
-// D11. Using do-while, roll a dice (1-6) repeatedly and print each roll.
-//      Keep a counter that increases only when you roll a 6 (not every
-//      roll). Break and print "Rolled three 6s in total!" the instant
-//      that counter reaches 3 - the three 6s do NOT need to be in a row.
+// D11. do-while: roll a dice repeatedly, count how many times you roll
+//      a 6. Break once that count reaches 3 (not necessarily in a row).
 
-// D12. Rewrite B18 (number guessing game, from Set B) using while(true)
-//      with break instead of a condition written in the while(...)
-//      line. Keep the attempts counter and the "Too high / Too low"
-//      messages exactly as before. Write a one-line comment giving your
-//      honest opinion: is the while(true)+break version easier or
-//      harder to read than the condition-based while version?
+// D12. Rewrite B18 (guessing game, Set B) using while (true) + break
+//      instead of a condition in the while(...) line.
 
 // =============================================================
-// PRACTICE SET E - 12 continue tasks (for, while, and do-while)
+// PRACTICE SET E - 12 continue tasks (for, while, do-while)
 // =============================================================
-// Point of every task: use continue to SKIP a round without stopping
-// the whole loop. In every while/do-while task below, double-check
-// that your counter/update variable is updated BEFORE the continue
-// line runs for that round - otherwise the loop may never move past
-// the value that gets skipped, and it will hang forever.
-// Rules: no arrays, objects or functions. No solutions given.
-// =============================================================
+// No arrays, objects or functions. No solutions given.
+// Reminder: in while/do-while, update your counter BEFORE continue.
 
-// E1. Using a for loop from 1 to 30, print every number EXCEPT
-//     multiples of 4 - skip them with continue instead of wrapping the
-//     console.log in an if/else.
+// E1. for loop 1 to 30: skip multiples of 4 using continue.
 
-// E2. Using a for loop of 10 rounds, ask the user for a number each
-//     round. If the number is negative, print "Skipping invalid entry"
-//     and continue (do not add it to anything). Otherwise add it to a
-//     running total. Print the total once the loop ends.
+// E2. for loop, 10 rounds: ask a number each round. If negative, print
+//     "Skipping invalid entry" and continue. Otherwise add it to a
+//     total. Print the total after the loop.
 
-// E3. Using a while loop with a counter from 1 to 50, print only the
-//     numbers that are NEITHER divisible by 3 NOR divisible by 5 - use
-//     continue to skip the ones that are.
-//     Think: write the counter's update (i += 1) as the very FIRST line
-//     of the body, before any if/continue - explain in a comment why
-//     that order matters for a while loop specifically (for loops don't
-//     have this problem, because their update step runs automatically).
+// E3. while loop, counter 1 to 50: skip (continue) numbers divisible
+//     by 3 or by 5. Print the rest.
 
-// E4. Using a for loop of 10 rounds, ask the user for a word each
-//     round. If the word is exactly "skip", print nothing and continue
-//     to the next round. Otherwise print the word together with its
-//     length.
+// E4. for loop, 10 rounds: ask a word each round. If it's "skip",
+//     continue. Otherwise print the word and its length.
 
-// E5. Using a for loop from 1 to 100, skip (continue) every number
-//     whose last digit is 0 (check with % 10). Print all the others.
-//     Expected start of output: 1 2 3 4 5 6 7 8 9  (10 and 20 are
-//     skipped, 11 appears next, and so on).
+// E5. for loop 1 to 100: skip numbers ending in 0 (n % 10 === 0).
+//     Print the rest.
 
-// E6. Using a do-while loop, ask the user for numbers until you have
-//     collected 8 of them (track your own counter). If a number is 0,
-//     print "Zero ignored" and continue WITHOUT letting it count toward
-//     the 8 - so entering a 0 should not use up one of your 8 slots,
-//     you simply ask again.
-//     Think: where exactly does your round-counter increase, relative
-//     to the continue line? Get this wrong and you'll either count the
-//     zero or loop forever.
+// E6. do-while: collect 8 numbers total. If 0 is entered, print "Zero
+//     ignored" and continue WITHOUT counting it toward the 8.
 
-// E7. Ask the user for one line of text (a sentence). Using a for loop
-//     (i from 0 to length - 1), walk through each character. Use
-//     continue to skip spaces, and count only the non-space characters.
-//     Print the final count.
+// E7. Ask for a sentence. for loop over its characters: skip spaces
+//     with continue, count the rest. Print the count.
 
-// E8. Using while (true), keep asking the user for numbers. If
-//     parseInt(...) on the input produces NaN (check with
-//     Number.isNaN(n)), print "Not a number, try again" and continue
-//     immediately WITHOUT counting that attempt. Break when the user
-//     enters -1, and print how many VALID numbers were entered in
-//     total (not counting the NaN attempts or the -1 itself).
+// E8. while (true): if parseInt(input) is NaN, print a message and
+//     continue without counting it. Break on -1. Print how many valid
+//     numbers were entered.
 
-// E9. Using a for loop from 1 to 40, continue (skip printing) every
-//     number divisible by 6 - but BEFORE the continue runs, increment a
-//     separate counter that tracks "how many multiples of 6 were
-//     skipped". Print that counter after the loop ends.
+// E9. for loop 1 to 40: continue past multiples of 6, but count how
+//     many were skipped (increment the counter BEFORE continue).
+//     Print the count after the loop.
 
-// E10. Using a for loop from 1 to 20, print "Odd" or "Even" for every
-//      number EXCEPT numbers divisible by 5, which should be skipped
-//      entirely with continue (nothing at all should print for them -
-//      not "Odd", not "Even", nothing).
+// E10. for loop 1 to 20: print "Odd"/"Even" for each number, but
+//      continue (skip completely, print nothing) on multiples of 5.
 
-// E11. Ask the user for a word. Using a for loop over its characters,
-//      use continue to skip vowels (a, e, i, o, u, both upper and lower
-//      case - use toLowerCase() to simplify the check) and build a new
-//      string containing only the consonants. Print that new string
-//      after the loop finishes.
+// E11. Ask for a word. for loop over its letters: skip vowels with
+//      continue, build a string of only the consonants, print it.
 
-// E12. Combine continue AND break in one for loop running i from 1 to
-//      100: continue past (skip) every number divisible by 2, but break
-//      completely the moment you reach a number greater than 50 that is
-//      divisible by 7. Print every number that actually gets printed,
-//      plus make the final printed line clearly show the stopping
-//      number.
-//      Think: trace by hand which numbers get silently skipped by
-//      continue versus the ONE number that finally triggers break -
-//      write both lists out on paper before running your code.
+// E12. for loop 1 to 100: continue past even numbers, break the moment
+//      you reach a number greater than 50 that's divisible by 7.
