@@ -97,6 +97,8 @@ console.log(x); // prints: 1, 2, 22
 
 // F5. Function add(a, b) that returns a + b. Call 3 times, print each result.
 
+// note: this one prints instead of returning - try changing it to
+// return a + b and print the result outside, like F4.
 // function add(a, b) {
 //   console.log(a + b);
 // }
@@ -162,34 +164,53 @@ console.log(x); // prints: 1, 2, 22
 //      otherwise return `valid: ${n * n}`.
 //      Test -4 -> "invalid", 6 -> "valid: 36".
 
-// function expressions
-// 1. anonymous function : function (){}
-// 2. arrow function     : () => {}
+// =============================================================
+// FUNCTION EXPRESSIONS
+// =============================================================
+// So far we wrote functions like: function name() {}
+// That's called a function DECLARATION.
+//
+// A function EXPRESSION is a function with no name of its own that
+// we treat like a value - put it in a variable, or hand it to
+// another function. Two ways to write one:
+//   1. anonymous function : function (){}   (normal function, just no name)
+//   2. arrow function     : () => {}        (shorter way of writing the same)
 
-// 1. can be stored in a variable
+// ---------------------------------------------------------------
+// USE 1 - store it in a variable
+// ---------------------------------------------------------------
 
 // anonymous function
 let addition = function (a, b) {
   return a + b;
-};
+}; // ; at the end because this whole thing is just "let addition = <value>;"
+// The variable name (addition) is now how we call it.
 
-let res = addition(34, 34);
-console.log(res);
+let res = addition(34, 34); // call it like any function -> gives back 68
+console.log(res); // 68
 
 // arrow function
 let sq = (n) => n ** 2;
-let newres = sq(23);
-console.log(newres);
+// Same idea, shorter. Read it as "take n, give back n squared".
+// If the body is just ONE expression, you can skip the {} and the
+// word return - whatever is after => is returned automatically.
+// With {} you must write return yourself: (n) => { return n ** 2; }
+let newres = sq(23); // 23 ** 2 = 529
+console.log(newres); // 529
 
-// 2. use them as callback
-
-// hof : higher order function
-// takes another function as parameter
-
-// callback
-// the passed function is called a callback
+// ---------------------------------------------------------------
+// USE 2 - pass it into another function (callback)
+// ---------------------------------------------------------------
+// Functions are values, so you can pass one in as an argument,
+// just like you pass a number or a string.
+//
+// HOF (higher order function) : a function that TAKES another
+//                               function as a parameter
+// callback                    : the function that gets PASSED in.
+//                               The HOF "calls it back" when it needs it.
 
 // let ageFn = (yob) => new Date().getFullYear() - yob;
+// new Date().getFullYear() gives the current year, minus birth year = age
 // console.log(ageFn(1999));
 
 // let lifeSpan = (avg_age, yob, ageCb) => {
@@ -198,15 +219,21 @@ console.log(newres);
 //   console.log(`Years left to live : ${years_left}`);
 // };
 
-// lifeSpan(90, 1999, ageFn);
+// lifeSpan(90, 1999, ageFn); // ageFn passed by NAME, no () - we're handing
+//                            // over the function, not running it here
 
 // hof : lifespan
 // callback : ageFn
 
+// Same thing, but this time the callback is written right inside the call.
 let lifeSpan = (avg_age, yob, ageCb) => {
-  let age = ageCb(yob);
+  // ageCb is just a parameter name - it holds whatever function was passed in
+  let age = ageCb(yob); // run the passed function with yob, get the age back
   let years_left = avg_age - age;
   console.log(`Years left to live : ${years_left}`);
 };
 
 lifeSpan(90, 1999, (yob) => new Date().getFullYear() - yob);
+// 3rd argument is an arrow function written on the spot (no variable needed).
+// lifeSpan receives it as ageCb and calls it inside.
+// lifeSpan doesn't care HOW age is worked out - it just trusts the callback.
