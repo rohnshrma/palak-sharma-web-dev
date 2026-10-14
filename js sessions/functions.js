@@ -88,8 +88,22 @@ console.log(x); // prints: 1, 2, 22
 // F4. Function squareReturn(n) that RETURNS n * n instead of printing.
 //     Store the result in a variable and print that variable.
 
+// function squareReturn(n) {
+//   return n * n;
+// }
+
+// let x = squareReturn(4);
+// console.log(x);
+
 // F5. Function add(a, b) that returns a + b. Call 3 times, print each result.
 
+// function add(a, b) {
+//   console.log(a + b);
+// }
+
+// add(34, 34);
+// add(34, 34);
+// add(34, 34);
 // F6. Function isEven(n) that returns true/false using:
 //     return n % 2 === 0;
 //     Call with 4, 7, 0.
@@ -147,3 +161,52 @@ console.log(x); // prints: 1, 2, 22
 //      if n is negative, return "invalid" right away.
 //      otherwise return `valid: ${n * n}`.
 //      Test -4 -> "invalid", 6 -> "valid: 36".
+
+// function expressions
+// 1. anonymous function : function (){}
+// 2. arrow function     : () => {}
+
+// 1. can be stored in a variable
+
+// anonymous function
+let addition = function (a, b) {
+  return a + b;
+};
+
+let res = addition(34, 34);
+console.log(res);
+
+// arrow function
+let sq = (n) => n ** 2;
+let newres = sq(23);
+console.log(newres);
+
+// 2. use them as callback
+
+// hof : higher order function
+// takes another function as parameter
+
+// callback
+// the passed function is called a callback
+
+// let ageFn = (yob) => new Date().getFullYear() - yob;
+// console.log(ageFn(1999));
+
+// let lifeSpan = (avg_age, yob, ageCb) => {
+//   let age = ageCb(yob);
+//   let years_left = avg_age - age;
+//   console.log(`Years left to live : ${years_left}`);
+// };
+
+// lifeSpan(90, 1999, ageFn);
+
+// hof : lifespan
+// callback : ageFn
+
+let lifeSpan = (avg_age, yob, ageCb) => {
+  let age = ageCb(yob);
+  let years_left = avg_age - age;
+  console.log(`Years left to live : ${years_left}`);
+};
+
+lifeSpan(90, 1999, (yob) => new Date().getFullYear() - yob);
