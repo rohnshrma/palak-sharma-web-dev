@@ -10,7 +10,7 @@
 // Every value gets a position number called its INDEX.
 // Counting starts at 0, not 1. So the 1st item is at index 0.
 
-let marks = [3, 45, 2, 33, 24, 32];
+// let marks = [3, 45, 2, 33, 24, 32];
 //  index:   0   1  2   3   4   5
 
 console.log(marks.length); // 6 -> how many items are in the list
@@ -84,3 +84,12 @@ console.log(a); // [290, 12, 3, 45, 99, 88]
 
 // a.splice(1, 1); // go to index 1, delete 1, put nothing back -> REMOVE
 // console.log(a);
+
+let marks = [234, 34, 23, 3, 52, 3, 4];
+
+// new array of doubles
+
+// for /while
+for (var i = 0; i < marks.length; i++) {
+  console.log(marks[i]);
+}

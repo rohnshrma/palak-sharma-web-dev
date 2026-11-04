@@ -585,3 +585,225 @@ console.log(names_clean); // ["Sumit", "Rohan", "Palak", "Jack"]
 // 10. Given an array of numbers [5, 10, 15, 20, 25, 30], keep numbers
 //     divisible by both 5 and 2, map each to the string "Rs. <number>",
 //     sort them Z to A as text, and print them one per line with forEach.
+
+
+// ========== reduce, find, findIndex ==========
+
+// ---------- reduce ----------
+// reduce takes the whole array and gives back only ONE value.
+// That one value can be a sum, a biggest number, a sentence, anything.
+//
+// How it works: reduce keeps one running result with it and goes
+// through every item. The callback gets these:
+//   1st = pv (previous value) -> the result we have made till now
+//   2nd = cv (current value)  -> the item we are standing on right now
+//   3rd = i                   -> index of that item (not compulsory)
+// Whatever we return from the callback, that becomes pv for the next item.
+// When the items are over, the last pv is the final answer.
+//
+// Remember: we have to return something every time. If we forget the
+// return, pv becomes undefined in the next round and the answer is wrong.
+
+// Way 1: starting value is not given
+// then reduce takes
+//   pv = arr[0] (first item)
+//   cv = arr[1] (second item)
+// so it runs one round less, because index 0 is already used as pv.
+
+marks = [1, 2, 3, 4, 5];
+// no let here because marks is already made on line 20 with var.
+// we are just putting a new array inside it.
+
+let total = marks.reduce((pv, cv) => {
+  // pv = pv + cv
+  return pv + cv; // add the current item in the total so far
+});
+console.log(total); // 15
+
+// how it ran (no starting value):
+//   round 1: pv = 1, cv = 2 -> return 3
+//   round 2: pv = 3, cv = 3 -> return 6
+//   round 3: pv = 6, cv = 4 -> return 10
+//   round 4: pv = 10, cv = 5 -> return 15, this is the answer
+// 5 items but only 4 rounds.
+
+// Way 2: starting value is given
+// the value we write after the callback is the starting pv
+//   pv = that value (here 0)
+//   cv = arr[0]
+// now every item gets a turn as cv, so 5 items means 5 rounds.
+
+let sumTotal = marks.reduce((pv, cv) => {
+  return pv + cv; // same thing, add current item in the total
+}, 0); // this 0 is the starting value of pv
+console.log(sumTotal); // 15
+
+// how it ran (starting value 0):
+//   round 1: pv = 0, cv = 1 -> 1
+//   round 2: pv = 1, cv = 2 -> 3
+//   round 3: pv = 3, cv = 3 -> 6
+//   round 4: pv = 6, cv = 4 -> 10
+//   round 5: pv = 10, cv = 5 -> 15
+//
+// Better to always give the starting value. If the array is empty and
+// we have not given it, reduce throws a TypeError. With the 0 it just
+// gives back 0.
+//   [].reduce((a, b) => a + b)     -> error
+//   [].reduce((a, b) => a + b, 0)  -> 0
+
+// biggest number using reduce
+// here pv is not a sum, it is "the biggest number we have seen till now"
+let maxi = marks.reduce((max, cv) => {
+  // max is just a better name for pv
+  if (cv > max) {
+    // current item is bigger, so it becomes the new biggest
+    // max = cv
+    return cv;
+  } else {
+    // old one is still the biggest, so keep it
+    // max = max
+    return max;
+  }
+}, marks[0]); // we start by taking the first item as the biggest
+
+console.log(maxi); // 5
+// for the smallest number just change the condition to cv < min
+
+// making a sentence using reduce
+let words = ["hello", "world", "my", "name", "is", "john"];
+let sentence = words.reduce((con, w, i) => {
+  // con = sentence made till now, w = current word, i = its index
+  if (i === 0) {
+    // first word, nothing to join yet so just return it
+    return w;
+  } else {
+    // other words, old sentence + space + new word
+    return con + " " + w;
+  }
+}); // starting value is not given, so in round 1 con = "hello", w = "world"
+
+console.log(sentence); // hello world my name is john
+
+// Note: because we did not give a starting value, reduce starts from
+// index 1. So i is never 0 here and the if part never runs. The answer
+// is still correct as con already starts with "hello". We can write it
+// shorter also:
+//   words.reduce((con, w) => con + " " + w)
+// (words.join(" ") gives the same, but reduce is useful when we want to
+// do some extra logic while joining.)
+
+// ---------- find ----------
+// find gives the FIRST item which passes the condition.
+// The callback should return true or false, same as filter.
+// As soon as one item gives true, find stops and returns that item
+// (only the item, not an array). If nobody passes, we get undefined.
+
+marks = [32, 24, 26, 45]; // new array to search in
+
+let firstOdd = marks.find((v) => v % 2 !== 0);
+// v % 2 !== 0 means remainder is not zero after dividing by 2, so v is odd
+// 32 even, 24 even, 26 even, 45 odd -> stop here and return 45
+
+console.log(firstOdd); // 45
+// marks.find((v) => v > 100) will give undefined because nobody is above 100
+
+// ---------- findIndex ----------
+// findIndex is same as find but it gives the index of the item, not the item.
+// If nobody passes, it gives -1 (not undefined).
+
+let firstOddIndex = marks.findIndex((v) => v % 2 !== 0);
+// same condition, so it stops at 45 and 45 is at index 3
+
+console.log(firstOddIndex); // 3
+// marks.findIndex((v) => v > 100) will give -1. There is no index
+// like -1 in an array, so -1 simply means "not found".
+
+// ---------- which one to use when ----------
+//  filter    -> all items that pass         -> gives an array ([] if none)
+//  find      -> first item that passes      -> gives the item (undefined if none)
+//  findIndex -> index of first item passing -> gives a number (-1 if none)
+//  some      -> does at least one pass?     -> true / false
+//  every     -> do all of them pass?        -> true / false
+//  reduce    -> join everything into one    -> one value of any type
+//
+// find and findIndex stop as soon as they get the answer, they don't
+// check the remaining items. filter and reduce always go through all.
+
+// ========== TASKS: reduce, find, findIndex (try yourself) ==========
+// Only arrays of numbers and strings, no objects.
+//
+// 1. Take [10, 20, 30, 40]. Find the sum using reduce without giving
+//    a starting value. Answer should be 100.
+//
+// 2. Same array [10, 20, 30, 40]. Find the sum using reduce but this
+//    time give the starting value as 50. Answer should be 150.
+//
+// 3. Take [4, 9, 2, 17, 6]. Find the smallest number using reduce.
+//    Answer should be 2.
+//
+// 4. Take [1, 2, 3, 4, 5]. Using reduce, multiply all the numbers and
+//    print the product. Answer should be 120.
+//
+// 5. Take ["I", "love", "coding"]. Using reduce, make the text
+//    "I-love-coding" (words joined with a dash).
+//
+// 6. Take ["apple", "kiwi", "banana", "fig"]. Find the longest word
+//    using reduce. Answer should be "banana".
+//
+// 7. Take [5, 12, 8, 130, 44]. Using find, get the first number which
+//    is greater than 10. Answer should be 12.
+//
+// 8. Same array [5, 12, 8, 130, 44]. Using findIndex, get the index of
+//    the first number greater than 10. Answer should be 1.
+//
+// 9. Take ["Rohan", "Palak", "Jack", "Sumit"]. Using find, get the
+//    first name which starts with "J". Then try the same with "Z" and
+//    print what you get when nothing is found.
+//
+// 10. Take [3, 6, 9, 12]. Using findIndex, look for the first number
+//     greater than 50. If the answer is -1 print "Not found",
+//     otherwise print the index.
+
+// ========== COMBINED TASKS 2 (try yourself) ==========
+// Use two or more of forEach, map, filter, some, every, sort, reduce,
+// find, findIndex in each question. No objects here also.
+//
+// 1. Take [1, 2, 3, 4, 5, 6]. Keep only the even numbers, square each
+//    of them and then add them all using reduce. Answer should be 56.
+//
+// 2. Take prices [120, 45, 300, 80, 999]. Keep the prices above 100
+//    using filter, find their total using reduce and then print the
+//    average (total divided by how many prices are there).
+//
+// 3. Take marks [55, 72, 31, 90, 28]. Check using every that all marks
+//    are above 20. If yes, print the highest mark using reduce.
+//
+// 4. Take ["  rohan ", "PALAK", " jAcK"]. Remove the extra spaces and
+//    make every name Capitalized using map. Then using reduce make one
+//    sentence "Rohan, Palak, Jack".
+//
+// 5. Take [14, 7, 22, 9, 31, 18]. Sort the numbers from high to low
+//    and then use find to get the first number which is less than 20.
+//    Answer should be 18.
+//
+// 6. Take ["code", "is", "fun", "javascript", "a"]. Using findIndex,
+//    find the position of the first word having less than 3 letters.
+//    Also check with some if any word has more than 8 letters.
+//
+// 7. Take temperatures in Celsius [0, 25, 37, 100, -5]. Convert them to
+//    Fahrenheit using map (F = C * 9/5 + 32). Then find the hottest one
+//    using reduce and tell its position using findIndex.
+//
+// 8. Take [5, 10, 15, 20, 25, 30]. Keep the numbers divisible by 10
+//    using filter, multiply each by 3 using map, sort them from high to
+//    low and print each one using forEach. After that print their sum
+//    using reduce.
+//
+// 9. Take years [1996, 2000, 2003, 2012, 2019, 2024]. Keep only the
+//    leap years using filter, find the first leap year after 2005 using
+//    find, and check using every if all the leap years are 1990 or later.
+//
+// 10. Take [3, 8, 1, 10, 6]. Sort them from low to high, turn each one
+//     into the text "No. <number>" using map, and then using reduce
+//     join them in one line like "No. 1 | No. 3 | No. 6 | ..." and
+//     print it.
