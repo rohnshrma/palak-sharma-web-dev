@@ -231,4 +231,60 @@ b2.info();
 // TYPE 3 - DYNAMIC : values are given at the time of creating the object
 // itself, in a single step, like : new Bike("zx10r", "kawasaki", "15 kmpl")
 // This is done with a special method called "constructor", which runs
-// automatically when we write "new". (This is the next topic.)
+// automatically when we write "new".
+//
+// CONSTRUCTOR : 1. Its name is always "constructor" (fixed keyword,
+//                  we cannot give it any other name).
+//               2. We never call it ourselves. JavaScript calls it
+//                  automatically the moment we write "new Person(...)".
+//               3. One class can have only one constructor.
+//               4. Its job is to set the starting values of the object.
+
+// Blueprint for creating person objects.
+class Person {
+  //  {}
+  // "new Person(...)" creates an empty object {} first, and "this"
+  // points to that object.
+
+  // The values passed inside new Person(...) land in these 3 parameters.
+  constructor(name, age, gender) {
+    // Creates key "name" in the new object and stores the parameter value.
+    this.name = name;
+    // Creates key "age" in the new object.
+    this.age = age;
+    // Creates key "gender" in the new object.
+    this.gender = gender;
+  }
+
+  // Method to get the details of the person.
+  info() {
+    // DIFFERENCE from earlier info() methods : this one does not print
+    // anything. It uses "return" to send the string back to the place
+    // where the method was called. So the caller can store it in a
+    // variable, print it, or use it anywhere else.
+    return `${this.name} is a ${this.age} year old ${this.gender} `;
+  }
+}
+
+// Object is created and filled in a single step.
+// constructor runs automatically : name = "Palak", age = 20, gender = "Female"
+// This solves the drawback of semi dynamic - no separate takeValues call,
+// so we cannot forget to fill the values.
+let p1 = new Person("Palak", 20, "Female");
+
+// Prints : Person { name: 'Palak', age: 20, gender: 'Female' }
+console.log(p1);
+
+// info() returns a string, so we catch that returned value in the variable "res".
+// Nothing is printed on this line.
+let res = p1.info();
+
+// Now we print the stored value. Prints : Palak is a 20 year old Female
+console.log(res);
+
+// ---------------------------------------------------------------------
+// QUICK REVISION : 3 ways of giving values to a class
+// ---------------------------------------------------------------------
+// static       -> values fixed inside the class      -> all objects same
+// semi dynamic -> values given later through a method -> 2 steps
+// dynamic      -> values given through constructor    -> 1 step (best way)
