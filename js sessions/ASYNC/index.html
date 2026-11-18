@@ -18,10 +18,12 @@
       HTML loads first and then JS runs.
       Open this page in the browser and check the Console (F12 -> Console)
       to see the output.
-      To try the callback example instead, change src to "./callback.js".
-      (Don't load both together — both files declare "const URL", and
+      Right now it loads "./async-await.js". You can switch the src to any
+      one of these: "./fetch.js", "./callback.js", "./promise.js" or
+      "./async-await.js".
+      (Load only ONE at a time — every file declares "const URL", and
       declaring the same const twice on one page gives an error.)
     -->
-    <script src="./fetch.js"></script>
+    <script src="./async-await.js"></script>
   </body>
 </html>
