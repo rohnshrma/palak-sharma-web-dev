@@ -1,0 +1,27 @@
+<!-- doctype tells the browser this is a modern HTML5 document -->
+<!doctype html>
+<!-- root element of the page; lang="en" tells browser/screen readers the page is in English -->
+<html lang="en">
+  <!-- head holds information ABOUT the page (not shown on screen) -->
+  <head>
+    <!-- character encoding, so all characters (₹, emojis, Hindi letters) display properly -->
+    <meta charset="UTF-8" />
+    <!-- makes the page responsive: width = device width, no zoom at start (important for mobiles) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- text shown on the browser tab -->
+    <title>Document</title>
+  </head>
+  <!-- body holds everything visible on the page -->
+  <body>
+    <!--
+      Link our JavaScript file. Script is placed at the END of body so the
+      HTML loads first and then JS runs.
+      Open this page in the browser and check the Console (F12 -> Console)
+      to see the output.
+      To try the callback example instead, change src to "./callback.js".
+      (Don't load both together — both files declare "const URL", and
+      declaring the same const twice on one page gives an error.)
+    -->
+    <script src="./fetch.js"></script>
+  </body>
+</html>
